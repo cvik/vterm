@@ -1,4 +1,4 @@
-package vt
+package vterm
 
 import (
     "fmt"
@@ -6,6 +6,65 @@ import (
     "os"
     "os/exec"
     "strings"
+)
+
+// Attributes
+const (
+    Bold = 1
+    Dim = 2
+    Underline = 4
+    Blink = 5
+    Reverse = 7
+    Hidden = 8
+    None = 0
+)
+
+// Foreground Colors
+const (
+    Default = 39
+    Black = iota + 29
+    Red
+    Green
+    Yellow
+    Blue
+    Magenta
+    Cyan
+    LightGray
+)
+
+const (
+    DarkGray = iota + 90
+    LightRed
+    LightGreen
+    LightYellow
+    LightBlue
+    LightMagenta
+    LightCyan
+    White
+)
+
+// Background Colors
+const (
+    BgDefault = 49
+    BgBlack = iota + 39
+    BgRed
+    BgGreen
+    BgYellow
+    BgBlue
+    BgMagenta
+    BgCyan
+    BgLightGray
+)
+
+const (
+    BgDarkGray = iota + 100
+    BgLightRed
+    BgLightGreen
+    BgLightYellow
+    BgLightBlue
+    BgLightMagenta
+    BgLightCyan
+    BgWhite
 )
 
 
