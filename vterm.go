@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"unicode/utf8"
 )
 
 // Attributes
@@ -91,27 +92,26 @@ func PipeToLess(str string) error {
 
 func Reflow(text string, width, indent int) string {
 	text = strings.Replace(text, "\t", " ", -1)
-	text = strings.Replace(text, "\r\n", "\n", -1)
-	oldLines := strings.Split(text, "\n")
-	tokens := []string{}
-	for _, l := range oldLines {
-		tokens = append(tokens, strings.Split(l, " ")...)
-	}
+	text = strings.Replace(text, "\r", " ", -1)
+	text = strings.Replace(text, "\n", " ", -1)
+	tokens := strings.Split(text, " ")
+
 	newLines := []string{}
 	currentLine := []string{}
 	lineLen := indent
 	indentStr := strings.Repeat(" ", indent)
 	for _, t := range tokens {
-		if lineLen+len(t) > width {
+		length := utf8.RuneCountInString(t)
+		if lineLen+length > width {
 			newLine := indentStr + strings.Join(currentLine, " ")
 			newLines = append(newLines, newLine)
 			currentLine = []string{t}
-			lineLen = len(t) + indent
+			lineLen = length + indent
 		} else {
 			currentLine = append(currentLine, t)
-			lineLen += len(t) + 1
+			lineLen += length + 1
 		}
 	}
-	finalLine := indentStr + strings.Join(currentLine, " ")
-	return strings.Join(append(newLines, finalLine), "\n")
+	lastLine := indentStr + strings.Join(currentLine, " ")
+	return strings.Join(append(newLines, lastLine), "\n")
 }

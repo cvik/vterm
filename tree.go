@@ -29,9 +29,13 @@ func (n *Node) Print() {
 }
 
 func (n *Node) printNode(lvl int, previousIndent string) {
+	// TODO: put into consts on package level
 	space := "│   "
+
 	inner := "├──"
+
 	outer := "└──"
+
 	nodeFmt := "%s %s\n"
 	leafFmt := "%s %s\n"
 	indent := ""
