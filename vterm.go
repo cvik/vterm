@@ -73,7 +73,11 @@ func Colorize(arg interface{}, attribute, color int) string {
 }
 
 func PipeToLess(str string) error {
-	less := exec.Command("less", "-r")
+	return PipeToCmd(str, "less", "-r")
+}
+
+func PipeToCmd(str, cmd string, args ...string) error {
+	less := exec.Command(cmd, args...)
 	less.Stdout = os.Stdout
 	less.Stderr = os.Stderr
 	w, err := less.StdinPipe()
